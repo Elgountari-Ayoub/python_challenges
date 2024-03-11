@@ -1,9 +1,7 @@
 from utils.data_processor import DataProcessor
 
 def main():
-    file_path = input("Enter file path: ")
-
-    data_processor = DataProcessor(file_path)
+    data_processor = DataProcessor()
     data_processor.read_file()
     if data_processor.data is not None:
         schema = data_processor.detect_schema()
