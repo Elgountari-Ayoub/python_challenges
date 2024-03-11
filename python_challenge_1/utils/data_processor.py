@@ -3,11 +3,23 @@ import os
 
 
 class DataProcessor:
+    """
+    This class processes data files including reading, schema detection,
+    transformation, and uploading to desired storage format.
+    """
+
     def __init__(self):
+        """
+        Initialize the DataProcessor object with an empty file path and data.
+        """
         self.file_path = None
         self.data = None
 
     def read_file(self):
+        """
+        Continuously prompts the user for a file path until a valid file is provided.
+        Supports CSV, Parquet, and Excel formats.
+        """
         while True:
             try:
                 file_path = input("Enter file path: ")
@@ -21,7 +33,8 @@ class DataProcessor:
                         self.data = pd.read_excel(self.file_path)
                     else:
                         print(
-                            "Unsupported file format. Please provide a file with format .csv, .parquet, or .xlsx.")
+                            "Unsupported file format. Please provide a file with format .csv, .parquet, or .xlsx."
+                        )
                         continue
                     break
                 else:
@@ -30,18 +43,27 @@ class DataProcessor:
                 print(f"Error reading file: {e}")
 
     def detect_schema(self):
+        """
+        Prints the data schema (data types of each column) if data is loaded successfully.
+        """
         try:
             print(self.data.dtypes)
         except Exception as e:
             print(f"Error detecting schema: {e}")
 
     def transform_to_table(self):
+        """
+        Transforms the loaded data into a pandas DataFrame object.
+        """
         try:
             return pd.DataFrame(self.data)
         except Exception as e:
             print(f"Error transforming data to table: {e}")
 
     def choose_storage_format(self):
+        """
+        Continuously prompts the user to choose a storage format (CSV, Parquet, or Excel) until a valid choice is made.
+        """
         while True:
             try:
                 choice = input(
@@ -54,6 +76,10 @@ class DataProcessor:
                 print(f"Error choosing storage format: {e}")
 
     def upload_file(self, storage_format):
+        """
+        Prompts the user for a filename (without extension) and path to upload the processed data.
+        Supports uploading to the chosen storage format (CSV, Parquet, or Excel).
+        """
 
         file_name = input(
             "Enter the name for the output file (without extension): ")
